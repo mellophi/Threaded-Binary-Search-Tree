@@ -481,10 +481,13 @@ void tree::split(int x){
 	node *ptr = root;
     vector<node*> afterSplit(2, new node(0));
  
-    node* currFirst = afterSplit[0];
-    node* currSecond = afterSplit[1];
+    node* currFirst = afterSplit[0]; //for saving the root node of first tree
+    node* currSecond = afterSplit[1]; //for saving the root node of the second tree
  
+
     while (ptr && (ptr->isleft == false || ptr->isright == false)){
+    	// if the value of a current node is smaller or equal to the given value,
+    	// then add the left subtree to the first tree 
  		if(ptr->value <= x){
             currFirst->right = new node(ptr->value);
             currFirst = currFirst->right;
@@ -494,7 +497,7 @@ void tree::split(int x){
             	ptr = ptr->right;
 			else break;
         }
- 
+ 		//else add right subtree to second tree and move to left child of the node
         else{
             currSecond->left = new node(ptr->value);
             currSecond = currSecond->left;
@@ -505,6 +508,7 @@ void tree::split(int x){
 			else break;
         }
     }
+    //this check is for the leaf nodes
 	if(ptr && ptr->isleft == true && ptr->isright == true){
 		 if(ptr->value <= x){
             currFirst->right = new node(ptr->value);
@@ -514,9 +518,11 @@ void tree::split(int x){
             currSecond->left = new node(ptr->value);
         }
 	}
-    afterSplit[0] = afterSplit[0]->right;
-    afterSplit[1]= afterSplit[1]->left;
 
+    afterSplit[0] = afterSplit[0]->right; // root of the first tree
+    afterSplit[1]= afterSplit[1]->left; // root of the second tree
+
+    //getting the inorder traversals of both trees
 	cout << "\nFirst BST after split: ";
 	getInorder(afterSplit[0]);
 	cout << "\n\nSecond BST after split: ";
