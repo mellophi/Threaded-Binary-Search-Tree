@@ -1,0 +1,7 @@
+*.exe.stackdump
+*.exe
+*.in
+*.gv
+*.h
+*.docx
+*.txt
